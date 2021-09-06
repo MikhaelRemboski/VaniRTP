@@ -1,0 +1,19 @@
+config:
+    rtp-info:
+        min: 150
+        max: 400
+    worlds:
+        Recursos:
+            x: 150
+            z: 130
+        End:
+            x: 150
+            y: 150
+
+
+    messages:
+        no-permission: "&c&lServidor>&f No tienes permisos para ejecutar ese comando"
+        usage: "&3&lServidor>&f El uso correcto es /rtp user world"
+        not-exist: "&c&lServidor>&f El usuario o el mundo no existen"
+        unexpected-error: "&c&lServidor>&f Ocurrio un error inesperado"
+        teleport-message: "&3&lServidor>&f Estas siendo teletransportado por VaniRtp"

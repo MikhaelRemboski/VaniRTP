@@ -1,0 +1,8 @@
+name: vanirtp
+main: main.Main
+version: 1.0
+author: ICUERVOI
+api-version: 1.16
+commands:
+  vanirtp:
+    usage: /<command>
