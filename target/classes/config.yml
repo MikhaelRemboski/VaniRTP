@@ -13,7 +13,7 @@ config:
 
     messages:
         no-permission: "&c&lServidor>&f No tienes permisos para ejecutar ese comando"
-        usage: "&3&lServidor>&f El uso correcto es /rtp user world"
+        usage: "&3&lServidor>&f El uso correcto es /rtp usuario mundo"
         not-exist: "&c&lServidor>&f El usuario o el mundo no existen"
         unexpected-error: "&c&lServidor>&f Ocurrio un error inesperado"
         teleport-message: "&3&lServidor>&f Estas siendo teletransportado por VaniRtp"
