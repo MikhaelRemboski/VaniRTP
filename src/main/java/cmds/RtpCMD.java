@@ -45,34 +45,33 @@ public class RtpCMD implements CommandExecutor {
         double zMin = 0;
         double xMax = 0;
         double xMin = 0;
-        if (player != null && world != null) {
-            if (world.getName().equals(player.getWorld().getName())) {
-                Location currentLocation = player.getLocation();
-                zMax = currentLocation.getZ();
-                zMin = currentLocation.getZ();
-                xMax = currentLocation.getX();
-                xMin = currentLocation.getX();
-            } else {
-
-                List<String> worlds = instance.getConfig().getStringList(Constants.WORLD_LIST);
-
-                for (String wName : worlds) {
-                    if (wName.equals(args[1])) {
-                        zMax = instance.getConfig().getInt(Constants.WORLD_LIST + "." + args[1] + ".z");
-                        zMin = instance.getConfig().getInt(Constants.WORLD_LIST + "." + args[1] + ".z");
-                        xMax = instance.getConfig().getInt(Constants.WORLD_LIST + "." + args[1] + ".x");
-                        xMin = instance.getConfig().getInt(Constants.WORLD_LIST + "." + args[1] + ".x");
-                    }
-                }
-
-            }
-            teleport(sender, minRange, maxRange, player, world, zMax, zMin, xMax, xMin);
-
-
-        } else {
+        if (player == null && world == null) {
             String msg = instance.getConfig().getString(Constants.NOT_EXIST_MESSAGE);
             sender.sendMessage(Main.colorize(msg));
+            return true;
         }
+
+        if (world.getName().equals(player.getWorld().getName())) {
+            Location currentLocation = player.getLocation();
+            zMax = currentLocation.getZ();
+            zMin = currentLocation.getZ();
+            xMax = currentLocation.getX();
+            xMin = currentLocation.getX();
+        } else {
+
+            List<String> worlds = instance.getConfig().getStringList(Constants.WORLD_LIST);
+
+            for (String wName : worlds) {
+                if (wName.equals(args[1])) {
+                    zMax = instance.getConfig().getInt(Constants.WORLD_LIST + "." + args[1] + ".z");
+                    zMin = instance.getConfig().getInt(Constants.WORLD_LIST + "." + args[1] + ".z");
+                    xMax = instance.getConfig().getInt(Constants.WORLD_LIST + "." + args[1] + ".x");
+                    xMin = instance.getConfig().getInt(Constants.WORLD_LIST + "." + args[1] + ".x");
+                }
+            }
+
+        }
+        teleport(sender, minRange, maxRange, player, world, zMax, zMin, xMax, xMin);
 
 
         return true;
@@ -145,8 +144,7 @@ public class RtpCMD implements CommandExecutor {
 
     private static int randomNumber(int min, int max) {
         Random random = new Random();
-        int randomNumber = random.nextInt(max - min) + min;
-        return randomNumber;
+        return random.nextInt(max - min) + min;
     }
 
 }
