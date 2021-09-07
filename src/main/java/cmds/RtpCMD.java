@@ -27,11 +27,6 @@ public class RtpCMD implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) {
-
-
-
-
-
         if (!sender.hasPermission(Constants.ADMIN_RTP)) {
             String msg = instance.getConfig().getString(Constants.NO_PERMISSION_MESSAGE_PATH);
             sender.sendMessage(Main.colorize(msg));
