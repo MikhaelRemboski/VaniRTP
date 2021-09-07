@@ -10,4 +10,8 @@ public class Constants {
     public static final String UNEXPECTED_ERROR_MESSAGE = "config.messages.unexpected.error";
     public static final String WORLD_LIST = "config.worlds";
     public static final String TELEPORT_MESSAGE ="config.messages.teleport-message";
+    public static final String VANIRTP_CMD = "vanirtp";
+    public static final String ON_ENABLE_MESSAGE = "&2&lActivando VaniRTP";
+    public static final String ON_DISABLE_MESSAGE = "&2&lDesactivando VaniRTP";
+    public static final String CONFIG_MAIN = "config.yml";
 }
