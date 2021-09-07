@@ -15,6 +15,7 @@ import utils.Constants;
 
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicReference;
 
 
 public class RtpCMD implements CommandExecutor {
@@ -26,7 +27,12 @@ public class RtpCMD implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String arg, String[] args) {
-        if (!sender.hasPermission(Constants.ADMIN_RTP) || !(sender instanceof ConsoleCommandSender)) {
+
+
+
+
+
+        if (!sender.hasPermission(Constants.ADMIN_RTP)) {
             String msg = instance.getConfig().getString(Constants.NO_PERMISSION_MESSAGE_PATH);
             sender.sendMessage(Main.colorize(msg));
             return true;
@@ -41,10 +47,10 @@ public class RtpCMD implements CommandExecutor {
         int maxRange = instance.getConfig().getInt(Constants.MAX_RANGE);
         Player player = Bukkit.getPlayer(args[0]);
         World world = Bukkit.getWorld(args[1]);
-        double zMax = 0;
-        double zMin = 0;
-        double xMax = 0;
-        double xMin = 0;
+        AtomicReference<Double> zMax = new AtomicReference<>((double) 0);
+        AtomicReference<Double> zMin = new AtomicReference<>((double) 0);
+        AtomicReference<Double> xMax = new AtomicReference<>((double) 0);
+        AtomicReference<Double> xMin = new AtomicReference<>((double) 0);
         if (player == null && world == null) {
             String msg = instance.getConfig().getString(Constants.NOT_EXIST_MESSAGE);
             sender.sendMessage(Main.colorize(msg));
@@ -53,25 +59,25 @@ public class RtpCMD implements CommandExecutor {
 
         if (world.getName().equals(player.getWorld().getName())) {
             Location currentLocation = player.getLocation();
-            zMax = currentLocation.getZ();
-            zMin = currentLocation.getZ();
-            xMax = currentLocation.getX();
-            xMin = currentLocation.getX();
+            zMax.set(currentLocation.getZ());
+            zMin.set(currentLocation.getZ());
+            xMax.set(currentLocation.getX());
+            xMin.set(currentLocation.getX());
         } else {
 
             List<String> worlds = instance.getConfig().getStringList(Constants.WORLD_LIST);
-
-            for (String wName : worlds) {
+            worlds.forEach(wName -> {
                 if (wName.equals(args[1])) {
-                    zMax = instance.getConfig().getInt(Constants.WORLD_LIST + "." + args[1] + ".z");
-                    zMin = instance.getConfig().getInt(Constants.WORLD_LIST + "." + args[1] + ".z");
-                    xMax = instance.getConfig().getInt(Constants.WORLD_LIST + "." + args[1] + ".x");
-                    xMin = instance.getConfig().getInt(Constants.WORLD_LIST + "." + args[1] + ".x");
+                    zMax.set((double) instance.getConfig().getInt(Constants.WORLD_LIST + "." + args[1] + ".z"));
+                    zMin.set((double) instance.getConfig().getInt(Constants.WORLD_LIST + "." + args[1] + ".z"));
+                    xMax.set((double) instance.getConfig().getInt(Constants.WORLD_LIST + "." + args[1] + ".x"));
+                    xMin.set((double) instance.getConfig().getInt(Constants.WORLD_LIST + "." + args[1] + ".x"));
                 }
-            }
+            });
+
 
         }
-        teleport(sender, minRange, maxRange, player, world, zMax, zMin, xMax, xMin);
+        teleport(sender, minRange, maxRange, player, world, zMax.get(), zMin.get(), xMax.get(), xMin.get());
 
 
         return true;
